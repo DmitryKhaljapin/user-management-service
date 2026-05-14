@@ -1,0 +1,7 @@
+node_modules
+dist
+dump
+.vscode
+.env*
+/src/generated/prisma
+README.txt
