@@ -6,7 +6,7 @@ import { TYPES } from '../types';
 import { ILogger } from '../logger/logger.service.interface';
 
 @injectable()
-export class PrismaService implements IDatabaseService {
+export class DatabaseService implements IDatabaseService {
   constructor(
     @inject(TYPES.LoggerService) private logger: ILogger,
     @inject(TYPES.PrismaClient) private client: PrismaClient,

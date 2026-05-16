@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { PrismaClient } from '@prisma/client';
 
-import { PrismaService } from './database.service';
+import { DatabaseService } from './database.service';
 
 import { TYPES } from '../types';
 
@@ -28,7 +28,7 @@ beforeEach(() => {
 
   container.unbindAll();
 
-  container.bind<IDatabaseService>(TYPES.DatabaseService).to(PrismaService);
+  container.bind<IDatabaseService>(TYPES.DatabaseService).to(DatabaseService);
 
   container
     .bind<ILogger>(TYPES.LoggerService)
