@@ -1,6 +1,5 @@
 export enum UserStatus {
-  // Other statuses may be added in the future (e.g. DEACTIVATED, BANNED)
-  NON_ACTIVE = 'nonActive',
+  PENDING = 'pending',
   ACTIVE = 'active',
   BLOCKED = 'blocked',
 }

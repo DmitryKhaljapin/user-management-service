@@ -7,13 +7,19 @@ datasource db {
   url      = env("DB_URI")
 }
 
-enum Role {
+enum UserRole {
   admin
   user
 }
 
-model User {
-  id          String   @id @default(uuid())
+enum UserStatus {
+  active
+  blocked
+  pending
+}
+
+model UserModel {
+  id          String @id @default(uuid())
 
   firstName   String
   lastName    String
@@ -21,12 +27,12 @@ model User {
 
   birthDate   DateTime
 
-  email       String   @unique
+  email       String @unique
+
   password    String
 
-  role        Role     @default(user)
-
-  isActive    Boolean  @default(true)
+  role        UserRole
+  status      UserStatus
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

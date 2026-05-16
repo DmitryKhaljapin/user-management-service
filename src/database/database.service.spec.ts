@@ -36,7 +36,7 @@ beforeEach(() => {
 
   container
     .bind<PrismaClient>(TYPES.PrismaClient)
-    .toConstantValue(PrismaClientMock as PrismaClient);
+    .toConstantValue(PrismaClientMock as unknown as PrismaClient);
 
   databaseService = container.get<IDatabaseService>(TYPES.DatabaseService);
 });

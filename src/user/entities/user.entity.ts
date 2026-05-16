@@ -52,6 +52,10 @@ export class User {
     return this._email;
   }
 
+  public get passwordHash(): string {
+    return this._passwordHash;
+  }
+
   get role(): UserRole {
     return this._role;
   }
