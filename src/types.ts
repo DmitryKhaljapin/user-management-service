@@ -9,4 +9,5 @@ export const TYPES = {
   UserRepository: Symbol.for('UserRepository'),
 
   RegisterUserUseCase: Symbol.for('RegisterUserUseCase'),
+  LoginUserUseCase: Symbol.for('LoginUserUseCase'),
 };
