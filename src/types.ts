@@ -11,4 +11,5 @@ export const TYPES = {
   RegisterUserUseCase: Symbol.for('RegisterUserUseCase'),
   LoginUserUseCase: Symbol.for('LoginUserUseCase'),
   GetUserByIdUseCase: Symbol.for('GetUserByIdUseCase'),
+  GetUsersQueryUseCase: Symbol.for('GetUsersQueryUseCase'),
 };
