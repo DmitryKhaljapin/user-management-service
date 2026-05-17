@@ -33,6 +33,20 @@ model UserModel {
   role        UserRole
   status      UserStatus @default(active)
 
+  token TokenModel?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model TokenModel {
+  id Int @id @default(autoincrement())
+
+  refreshToken String @unique
+
+  // One refresh token per user.
+  // Can be extended later to support multiple devices/sessions.
+  userId String @unique
+
+  user UserModel @relation(fields: [userId], references: [id], onDelete: Cascade )
 }
