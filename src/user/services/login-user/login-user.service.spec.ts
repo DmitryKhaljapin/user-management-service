@@ -13,13 +13,9 @@ import { UserStatus } from '../../entities/user-status.enum';
 
 const UserRepositoryMock: IUserRepository = {
   create: jest.fn(),
-
   save: jest.fn(),
-
   findByEmail: jest.fn(),
-
   findById: jest.fn(),
-
   findAll: jest.fn(),
 };
 
