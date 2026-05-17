@@ -7,4 +7,6 @@ export const TYPES = {
   DatabaseService: Symbol.for('DatabaseService'),
   PrismaClient: Symbol.for('PrismaClient'),
   UserRepository: Symbol.for('UserRepository'),
+
+  RegisterUserUseCase: Symbol.for('RegisterUserUseCase'),
 };

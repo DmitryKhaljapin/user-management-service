@@ -1,5 +1,7 @@
+// Additional statuses may be introduced in the future
+// (e.g. BANNED, DEACTIVATED)
+
 export enum UserStatus {
-  PENDING = 'pending',
   ACTIVE = 'active',
-  BLOCKED = 'blocked',
+  INACTIVE = 'inactive',
 }

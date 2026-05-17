@@ -14,8 +14,7 @@ enum UserRole {
 
 enum UserStatus {
   active
-  blocked
-  pending
+  inactive
 }
 
 model UserModel {
@@ -32,7 +31,7 @@ model UserModel {
   password    String
 
   role        UserRole
-  status      UserStatus
+  status      UserStatus @default(active)
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

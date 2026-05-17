@@ -39,7 +39,7 @@ export class NewUser {
 
     this._role = role;
 
-    this._status = UserStatus.PENDING;
+    this._status = UserStatus.ACTIVE;
 
     this._passwordHash = '';
   }

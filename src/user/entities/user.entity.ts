@@ -83,10 +83,6 @@ export class User {
   }
 
   public block(): void {
-    this._status = UserStatus.BLOCKED;
-  }
-
-  public activate(): void {
-    this._status = UserStatus.ACTIVE;
+    this._status = UserStatus.INACTIVE;
   }
 }
