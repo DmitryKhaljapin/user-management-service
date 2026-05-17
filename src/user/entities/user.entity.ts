@@ -6,25 +6,15 @@ import { UserStatus } from './user-status.enum';
 export class User {
   constructor(
     private _id: string,
-
     private _firstName: string,
-
     private _lastName: string,
-
     private _birthDate: Date,
-
     private _email: string,
-
     private _passwordHash: string,
-
     private _role: UserRole,
-
     private _status: UserStatus,
-
     private _createdAt: Date,
-
     private _updatedAt: Date,
-
     private _middleName?: string,
   ) {}
 
@@ -83,6 +73,8 @@ export class User {
   }
 
   public block(): void {
+    if (this._status === UserStatus.INACTIVE) return;
+
     this._status = UserStatus.INACTIVE;
   }
 }

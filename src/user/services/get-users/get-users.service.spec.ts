@@ -6,7 +6,7 @@ import { IUserRepository } from '../../repository/user.repository.interface';
 import { UserRole } from '../../entities/user-role.enum';
 import { UserStatus } from '../../entities/user-status.enum';
 import { GetUsersService } from './get-users.service';
-import { GetUsersQueryUseCase } from '../../use-cases/get-users.use-case';
+import { GetUsersUseCase } from '../../use-cases/get-users.use-case';
 import { GetUsersQuery } from '../../queries/get-users.query';
 
 const UserRepositoryMock: IUserRepository = {
@@ -19,18 +19,16 @@ const UserRepositoryMock: IUserRepository = {
 
 const container = new Container();
 
-let service: GetUsersQueryUseCase;
+let service: GetUsersUseCase;
 
 beforeAll(() => {
-  container
-    .bind<GetUsersQueryUseCase>(TYPES.GetUsersQueryUseCase)
-    .to(GetUsersService);
+  container.bind<GetUsersUseCase>(TYPES.GetUsersUseCase).to(GetUsersService);
 
   container
     .bind<IUserRepository>(TYPES.UserRepository)
     .toConstantValue(UserRepositoryMock);
 
-  service = container.get<GetUsersQueryUseCase>(TYPES.GetUsersQueryUseCase);
+  service = container.get<GetUsersUseCase>(TYPES.GetUsersUseCase);
 });
 
 afterEach(() => {

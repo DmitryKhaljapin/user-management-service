@@ -4,11 +4,11 @@ import { TYPES } from '../../../types';
 import { User } from '../../entities/user.entity';
 import { GetUsersQuery } from '../../queries/get-users.query';
 import { IUserRepository } from '../../repository/user.repository.interface';
-import { GetUsersQueryUseCase } from '../../use-cases/get-users.use-case';
+import { GetUsersUseCase } from '../../use-cases/get-users.use-case';
 import { UserRole } from '../../entities/user-role.enum';
 
 @injectable()
-export class GetUsersService implements GetUsersQueryUseCase {
+export class GetUsersService implements GetUsersUseCase {
   constructor(
     @inject(TYPES.UserRepository)
     private repository: IUserRepository,
