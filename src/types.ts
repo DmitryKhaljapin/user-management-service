@@ -3,6 +3,7 @@ export const TYPES = {
 
   LoggerService: Symbol.for('LoggerService'),
   ConfigService: Symbol.for('ConfigSevice'),
+  JwtService: Symbol.for('JwtService'),
 
   DatabaseService: Symbol.for('DatabaseService'),
   PrismaClient: Symbol.for('PrismaClient'),
@@ -15,4 +16,6 @@ export const TYPES = {
   GetUserByIdUseCase: Symbol.for('GetUserByIdUseCase'),
   GetUsersUseCase: Symbol.for('GetUsersUseCase'),
   BlockUserUseCase: Symbol.for('BlockUserUseCase'),
+
+  RefreshTokenUseCase: Symbol.for('RefreshTokenUseCase'),
 };

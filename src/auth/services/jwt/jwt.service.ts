@@ -1,8 +1,8 @@
 import { sign, verify } from 'jsonwebtoken';
 import { injectable, inject } from 'inversify';
 
-import { IConfigService } from '../../config/config.service.interface';
-import { TYPES } from '../../types';
+import { IConfigService } from '../../../config/config.service.interface';
+import { TYPES } from '../../../types';
 import { AuthJwtPayload, IJwtService, ITokens } from './jwt.service.interface';
 
 @injectable()
@@ -37,13 +37,14 @@ export class JwtService implements IJwtService {
     });
   }
 
-  public validateRefreshToken(refreshToken: string): boolean {
+  public validateRefreshToken(refreshToken: string): AuthJwtPayload | null {
     try {
-      verify(refreshToken, this.configService.get('JWT_REFRESH_SECRET'));
-
-      return true;
+      return verify(
+        refreshToken,
+        this.configService.get('JWT_REFRESH_SECRET'),
+      ) as AuthJwtPayload;
     } catch {
-      return false;
+      return null;
     }
   }
 }

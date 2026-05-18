@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { UserRole } from '../../user/entities/user-role.enum';
+import { UserRole } from '../../../user/entities/user-role.enum';
 
 // TODO: move
 export interface ITokens {
@@ -18,5 +18,5 @@ export interface IJwtService {
 
   generateAccessToken(payload: JwtPayload): string;
 
-  validateRefreshToken(refreshToken: string): boolean;
+  validateRefreshToken(refreshToken: string): AuthJwtPayload | null;
 }
