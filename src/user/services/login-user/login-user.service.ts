@@ -6,6 +6,9 @@ import { LoginUserUseCase } from '../../use-cases/login-user.use-case';
 import { UserStatus } from '../../entities/user-status.enum';
 import { ForbiddenException } from '../../../common/exceptions/forbidden.exception';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
+import { IJwtService } from '../../../auth/services/jwt/jwt.service.interface';
+import { SaveTokenUseCase } from '../../../auth/user-cases/save-token.use-case';
+import { SaveTokenCommand } from '../../../auth/commands/save-token.command';
 
 @injectable()
 export class LoginUserService implements LoginUserUseCase {
@@ -13,8 +16,11 @@ export class LoginUserService implements LoginUserUseCase {
     @inject(TYPES.UserRepository)
     private repository: IUserRepository,
 
-    // @inject(TYPES.TokenService)
-    // private tokenService: TokenService,
+    @inject(TYPES.JwtService)
+    private jwtService: IJwtService,
+
+    @inject(TYPES.SaveTokenUseCase)
+    private saveTokenUseCase: SaveTokenUseCase,
   ) {}
 
   public async handle(
@@ -36,12 +42,16 @@ export class LoginUserService implements LoginUserUseCase {
       throw new ForbiddenException('User is inactive');
     }
 
-    // TODO: Authentication flow (access/refresh tokens, logout, session renewal) will be implemented separately
-    // to keep the current focus on core user use-cases.
-    const accessToken = '';
+    const tokens = this.jwtService.generateTokens({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
-    return {
-      accessToken,
-    };
+    await this.saveTokenUseCase.handle(
+      new SaveTokenCommand(tokens.refreshToken, user.id),
+    );
+
+    return tokens;
   }
 }

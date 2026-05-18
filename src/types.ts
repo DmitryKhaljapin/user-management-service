@@ -18,4 +18,5 @@ export const TYPES = {
   BlockUserUseCase: Symbol.for('BlockUserUseCase'),
 
   RefreshTokenUseCase: Symbol.for('RefreshTokenUseCase'),
+  SaveTokenUseCase: Symbol.for('SaveTokenUseCase'),
 };
