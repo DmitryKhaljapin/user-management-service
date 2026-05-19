@@ -9,6 +9,7 @@ import { TYPES } from './types';
 import { IConfigService } from './config/config.service.interface';
 import { IDatabaseService } from './database/database.service.interface';
 import { ILogger } from './logger/logger.service.interface';
+import { IAuthController } from './auth/controller/auth.controller.interface';
 
 @injectable()
 export class App {
@@ -21,13 +22,14 @@ export class App {
     @inject(TYPES.LoggerService) private logger: ILogger,
     @inject(TYPES.ConfigService) private configService: IConfigService,
     @inject(TYPES.DatabaseService) private databaseService: IDatabaseService,
+    @inject(TYPES.AuthController) private authController: IAuthController,
   ) {
     this.app = express();
     this.port = Number(this.configService.get('PORT'));
     this.hostname = this.configService.get('HOST') ?? '127.0.0.1';
   }
 
-  public useMiddleware() {
+  private useMiddleware() {
     this.app.use(json());
     this.app.use(cookieParser());
     this.app.use(
@@ -39,12 +41,17 @@ export class App {
     );
   }
 
+  private useRoutes() {
+    this.app.use('/api/auth', this.authController.router);
+  }
+
   public async useDatabaseService() {
     await this.databaseService.connect();
   }
 
   public async init() {
     this.useMiddleware();
+    this.useRoutes();
 
     await this.useDatabaseService();
 

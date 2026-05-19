@@ -4,7 +4,12 @@ import { TYPES } from '../../../types';
 import { RefreshTokenCommand } from '../../commands/refresh-token.command';
 import { ITokenRepository } from '../../repository/token.repository.interface';
 import { RefreshTokenUseCase } from '../../use-cases/refresh-token.use-case';
-import { IJwtService, ITokens } from '../jwt/jwt.service.interface';
+import {
+  AuthJwtPayload,
+  IJwtService,
+  ITokens,
+} from '../jwt/jwt.service.interface';
+import { Token } from '../../entities/token.entity';
 
 @injectable()
 export class RefreshTokenService implements RefreshTokenUseCase {
@@ -31,6 +36,17 @@ export class RefreshTokenService implements RefreshTokenUseCase {
       throw new UnauthorizedException('Invalid refresh token');
     }
 
-    return this.jwtService.generateTokens(payload);
+    const cleanPayload: AuthJwtPayload = {
+      userId: payload.userId,
+      role: payload.role,
+      email: payload.email,
+    };
+    const tokens = this.jwtService.generateTokens(cleanPayload);
+
+    const newToken = new Token(tokens.refreshToken, payload.userId);
+
+    await this.tokenRepository.update(newToken);
+
+    return tokens;
   }
 }

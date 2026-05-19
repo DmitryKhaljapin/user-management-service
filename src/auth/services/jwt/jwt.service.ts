@@ -1,4 +1,4 @@
-import { sign, verify } from 'jsonwebtoken';
+import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { injectable, inject } from 'inversify';
 
 import { IConfigService } from '../../../config/config.service.interface';
@@ -35,6 +35,19 @@ export class JwtService implements IJwtService {
       algorithm: 'HS256',
       expiresIn: '15m',
     });
+  }
+
+  validateAccessToken(token: string): AuthJwtPayload | null {
+    try {
+      const payload = verify(
+        token,
+        this.configService.get('JWT_ACCESS_SECRET'),
+      );
+
+      return payload as AuthJwtPayload;
+    } catch {
+      return null;
+    }
   }
 
   public validateRefreshToken(refreshToken: string): AuthJwtPayload | null {

@@ -12,6 +12,7 @@ import { Token } from '../../entities/token.entity';
 const JwtServiceMock: IJwtService = {
   generateTokens: jest.fn(),
   generateAccessToken: jest.fn(),
+  validateAccessToken: jest.fn(),
   validateRefreshToken: jest.fn(),
 };
 

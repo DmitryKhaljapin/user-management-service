@@ -19,4 +19,6 @@ export interface IJwtService {
   generateAccessToken(payload: JwtPayload): string;
 
   validateRefreshToken(refreshToken: string): AuthJwtPayload | null;
+
+  validateAccessToken(token: string): AuthJwtPayload | null;
 }
