@@ -10,6 +10,7 @@ import { IConfigService } from './config/config.service.interface';
 import { IDatabaseService } from './database/database.service.interface';
 import { ILogger } from './logger/logger.service.interface';
 import { IAuthController } from './auth/controller/auth.controller.interface';
+import { IUserController } from './user/controllers/user.controller.interfase';
 
 @injectable()
 export class App {
@@ -23,6 +24,7 @@ export class App {
     @inject(TYPES.ConfigService) private configService: IConfigService,
     @inject(TYPES.DatabaseService) private databaseService: IDatabaseService,
     @inject(TYPES.AuthController) private authController: IAuthController,
+    @inject(TYPES.UserController) private userController: IUserController,
   ) {
     this.app = express();
     this.port = Number(this.configService.get('PORT'));
@@ -43,6 +45,7 @@ export class App {
 
   private useRoutes() {
     this.app.use('/api/auth', this.authController.router);
+    this.app.use('/api/users', this.userController.router);
   }
 
   public async useDatabaseService() {

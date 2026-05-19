@@ -8,9 +8,12 @@ export const TYPES = {
   DatabaseService: Symbol.for('DatabaseService'),
   PrismaClient: Symbol.for('PrismaClient'),
 
+  AuthMiddleware: Symbol.for('AuthMiddleware'),
+
   UserRepository: Symbol.for('UserRepository'),
   TokenRepository: Symbol.for('TokenRepository'),
 
+  UserMapper: Symbol.for('UserMapper'),
   AuthMapper: Symbol.for('AuthMapper'),
 
   RegisterUserUseCase: Symbol.for('RegisterUserUseCase'),
@@ -24,4 +27,5 @@ export const TYPES = {
   LoginUseCase: Symbol.for('LoginUseCase'),
 
   AuthController: Symbol.for('AuthController'),
+  UserController: Symbol.for('UserController'),
 };

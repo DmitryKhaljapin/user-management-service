@@ -30,6 +30,9 @@ import { BlockUserService } from './user/services/block-user/block-user.service'
 import { GetUserByIdService } from './user/services/get-user-by-id/get-user-by-id.service';
 import { GetUsersService } from './user/services/get-users/get-users.service';
 import { RegisterUserService } from './auth/services/register-user/register-user.service';
+import { UserController } from './user/controllers/user.controller';
+import { IMiddleware } from './common/middleware.interface';
+import { AuthMiddleware } from './common/auth.middleware';
 
 export const appBindings = new ContainerModule(
   (options: ContainerModuleLoadOptions) => {
@@ -66,9 +69,13 @@ export const appBindings = new ContainerModule(
       })
       .inSingletonScope();
 
+    options.bind<IMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
+
     options.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
 
     options.bind<ITokenRepository>(TYPES.TokenRepository).to(TokenRepository);
+
+    options.bind<UserMapper>(TYPES.UserMapper).to(UserMapper);
 
     options.bind<AuthMapper>(TYPES.AuthMapper).to(AuthMapper);
 
@@ -89,6 +96,8 @@ export const appBindings = new ContainerModule(
     options.bind(TYPES.LogoutUseCase).to(LogoutService);
 
     options.bind<AuthController>(TYPES.AuthController).to(AuthController);
+
+    options.bind<UserController>(TYPES.UserController).to(UserController);
   },
 );
 
