@@ -2,14 +2,18 @@ import { Container } from 'inversify';
 
 import { ForbiddenException } from '../../../common/exceptions/forbidden.exception';
 import { TYPES } from '../../../types';
-import { LoginUserCommand } from '../../commands/login-user.command';
-import { User } from '../../entities/user.entity';
-import { IUserRepository } from '../../repository/user.repository.interface';
-import { LoginUserUseCase } from '../../use-cases/login-user.use-case';
-import { LoginUserService } from './login-user.service';
+
+import { User } from '../../../user/entities/user.entity';
+import { IUserRepository } from '../../../user/repository/user.repository.interface';
+
+import { LoginUserService } from './login.service';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
-import { UserRole } from '../../entities/user-role.enum';
-import { UserStatus } from '../../entities/user-status.enum';
+import { UserRole } from '../../../user/entities/user-role.enum';
+import { UserStatus } from '../../../user/entities/user-status.enum';
+import { LoginUseCase } from '../../user-cases/login.use-case';
+import { LoginCommand } from '../../commands/login.command';
+import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { IJwtService } from '../jwt/jwt.service.interface';
 
 const UserRepositoryMock: IUserRepository = {
   create: jest.fn(),
@@ -19,9 +23,19 @@ const UserRepositoryMock: IUserRepository = {
   findAll: jest.fn(),
 };
 
+const JwtServiceMock: IJwtService = {
+  generateTokens: jest.fn(),
+  generateAccessToken: jest.fn(),
+  validateRefreshToken: jest.fn(),
+};
+
+const SaveTokenUseCaseMock = {
+  handle: jest.fn(),
+};
+
 const container = new Container();
 
-let service: LoginUserUseCase;
+let service: LoginUseCase;
 
 const user = new User(
   '1',
@@ -37,13 +51,19 @@ const user = new User(
 );
 
 beforeAll(() => {
-  container.bind<LoginUserUseCase>(TYPES.LoginUserUseCase).to(LoginUserService);
+  container.bind<LoginUseCase>(TYPES.LoginUseCase).to(LoginUserService);
 
   container
     .bind<IUserRepository>(TYPES.UserRepository)
     .toConstantValue(UserRepositoryMock);
 
-  service = container.get<LoginUserUseCase>(TYPES.LoginUserUseCase);
+  container
+    .bind<SaveTokenUseCase>(TYPES.SaveTokenUseCase)
+    .toConstantValue(SaveTokenUseCaseMock);
+
+  container.bind<IJwtService>(TYPES.JwtService).toConstantValue(JwtServiceMock);
+
+  service = container.get<LoginUseCase>(TYPES.LoginUseCase);
 });
 
 describe('LoginUserService', () => {
@@ -56,7 +76,7 @@ describe('LoginUserService', () => {
       UserRepositoryMock.findByEmail = jest.fn().mockResolvedValueOnce(null);
 
       await expect(
-        service.handle(new LoginUserCommand('test@mail.com', '12345')),
+        service.handle(new LoginCommand('test@mail.com', '12345')),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -68,7 +88,7 @@ describe('LoginUserService', () => {
         .mockResolvedValueOnce(false);
 
       await expect(
-        service.handle(new LoginUserCommand('test@mail.com', 'wrong')),
+        service.handle(new LoginCommand('test@mail.com', 'wrong')),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -78,13 +98,11 @@ describe('LoginUserService', () => {
       jest.spyOn(User.prototype, 'comparePassword').mockResolvedValueOnce(true);
 
       await expect(
-        service.handle(new LoginUserCommand('test@mail.com', '12345')),
+        service.handle(new LoginCommand('test@mail.com', '12345')),
       ).rejects.toThrow(ForbiddenException);
     });
 
-    // TODO: Extend this test after implementing token flow:
-    // verify access/refresh token generation and refresh token persistence.
-    it('returns access token', async () => {
+    it('returns tokens', async () => {
       const activeUser = new User(
         '1',
         'John',
@@ -102,14 +120,20 @@ describe('LoginUserService', () => {
         .fn()
         .mockResolvedValueOnce(activeUser);
 
-      jest.spyOn(User.prototype, 'comparePassword').mockResolvedValueOnce(true);
+      jest.spyOn(activeUser, 'comparePassword').mockResolvedValueOnce(true);
 
-      const result = await service.handle(
-        new LoginUserCommand('test@mail.com', '12345'),
+      (JwtServiceMock.generateTokens as jest.Mock).mockReturnValueOnce({
+        accessToken: 'access',
+        refreshToken: 'refresh',
+      });
+
+      const tokens = await service.handle(
+        new LoginCommand('test@mail.com', 'password'),
       );
 
-      expect(result).toEqual({
-        accessToken: '',
+      expect(tokens).toEqual({
+        accessToken: 'access',
+        refreshToken: 'refresh',
       });
     });
   });

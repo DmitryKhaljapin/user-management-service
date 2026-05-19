@@ -1,17 +1,17 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../../../types';
-import { LoginUserCommand } from '../../commands/login-user.command';
-import { IUserRepository } from '../../repository/user.repository.interface';
-import { LoginUserUseCase } from '../../use-cases/login-user.use-case';
-import { UserStatus } from '../../entities/user-status.enum';
+import { LoginCommand } from '../../commands/login.command';
+import { IUserRepository } from '../../../user/repository/user.repository.interface';
+import { UserStatus } from '../../../user/entities/user-status.enum';
 import { ForbiddenException } from '../../../common/exceptions/forbidden.exception';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
-import { IJwtService } from '../../../auth/services/jwt/jwt.service.interface';
-import { SaveTokenUseCase } from '../../../auth/user-cases/save-token.use-case';
-import { SaveTokenCommand } from '../../../auth/commands/save-token.command';
+import { IJwtService } from '../jwt/jwt.service.interface';
+import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { SaveTokenCommand } from '../../commands/save-token.command';
+import { LoginUseCase } from '../../user-cases/login.use-case';
 
 @injectable()
-export class LoginUserService implements LoginUserUseCase {
+export class LoginUserService implements LoginUseCase {
   constructor(
     @inject(TYPES.UserRepository)
     private repository: IUserRepository,
@@ -23,9 +23,7 @@ export class LoginUserService implements LoginUserUseCase {
     private saveTokenUseCase: SaveTokenUseCase,
   ) {}
 
-  public async handle(
-    command: LoginUserCommand,
-  ): Promise<{ accessToken: string }> {
+  public async handle(command: LoginCommand): Promise<{ accessToken: string }> {
     const user = await this.repository.findByEmail(command.email);
 
     if (!user) {

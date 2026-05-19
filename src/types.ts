@@ -12,7 +12,6 @@ export const TYPES = {
   TokenRepository: Symbol.for('TokenRepository'),
 
   RegisterUserUseCase: Symbol.for('RegisterUserUseCase'),
-  LoginUserUseCase: Symbol.for('LoginUserUseCase'),
   GetUserByIdUseCase: Symbol.for('GetUserByIdUseCase'),
   GetUsersUseCase: Symbol.for('GetUsersUseCase'),
   BlockUserUseCase: Symbol.for('BlockUserUseCase'),
@@ -20,4 +19,5 @@ export const TYPES = {
   RefreshTokenUseCase: Symbol.for('RefreshTokenUseCase'),
   SaveTokenUseCase: Symbol.for('SaveTokenUseCase'),
   LogoutUseCase: Symbol.for('LogoutUseCase'),
+  LoginUseCase: Symbol.for('LoginUseCase'),
 };
