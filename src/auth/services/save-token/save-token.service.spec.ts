@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { TYPES } from '../../../types';
 import { ITokenRepository } from '../../repository/token.repository.interface';
-import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { SaveTokenUseCase } from '../../use-cases/save-token.use-case';
 import { SaveTokenService } from './save-token.service';
 import { Token } from '../../entities/token.entity';
 import { SaveTokenCommand } from '../../commands/save-token.command';

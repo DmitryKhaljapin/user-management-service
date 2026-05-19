@@ -3,7 +3,7 @@ import { UnauthorizedException } from '../../../common/exceptions/unauthorized.e
 import { TYPES } from '../../../types';
 import { RefreshTokenCommand } from '../../commands/refresh-token.command';
 import { ITokenRepository } from '../../repository/token.repository.interface';
-import { RefreshTokenUseCase } from '../../user-cases/refresh-token.use-case';
+import { RefreshTokenUseCase } from '../../use-cases/refresh-token.use-case';
 import { IJwtService, ITokens } from '../jwt/jwt.service.interface';
 
 @injectable()

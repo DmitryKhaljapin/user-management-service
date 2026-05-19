@@ -3,10 +3,10 @@ import { ConflictException } from '../../../common/exceptions/conflict.exception
 import { IConfigService } from '../../../config/config.service.interface';
 import { TYPES } from '../../../types';
 import { RegisterUserCommand } from '../../commands/register-user.command';
-import { NewUser } from '../../entities/new-user.entity';
-import { IUserRepository } from '../../repository/user.repository.interface';
-import { RegisterUserUseCase } from '../../use-cases/register-user.use-case';
+import { NewUser } from '../../../user/entities/new-user.entity';
+import { IUserRepository } from '../../../user/repository/user.repository.interface';
 import { RegisterUserService } from './register-user.service';
+import { RegisterUserUseCase } from '../../use-cases/register-user.use-case';
 
 const ConfigServiceMock: IConfigService = {
   get: jest.fn(),

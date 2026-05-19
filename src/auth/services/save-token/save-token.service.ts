@@ -3,7 +3,7 @@ import { TYPES } from '../../../types';
 import { SaveTokenCommand } from '../../commands/save-token.command';
 import { Token } from '../../entities/token.entity';
 import { ITokenRepository } from '../../repository/token.repository.interface';
-import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { SaveTokenUseCase } from '../../use-cases/save-token.use-case';
 
 @injectable()
 export class SaveTokenService implements SaveTokenUseCase {

@@ -6,9 +6,9 @@ import { UserStatus } from '../../../user/entities/user-status.enum';
 import { ForbiddenException } from '../../../common/exceptions/forbidden.exception';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
 import { IJwtService } from '../jwt/jwt.service.interface';
-import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { SaveTokenUseCase } from '../../use-cases/save-token.use-case';
 import { SaveTokenCommand } from '../../commands/save-token.command';
-import { LoginUseCase } from '../../user-cases/login.use-case';
+import { LoginUseCase } from '../../use-cases/login.use-case';
 
 @injectable()
 export class LoginUserService implements LoginUseCase {

@@ -10,9 +10,9 @@ import { LoginUserService } from './login.service';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
 import { UserRole } from '../../../user/entities/user-role.enum';
 import { UserStatus } from '../../../user/entities/user-status.enum';
-import { LoginUseCase } from '../../user-cases/login.use-case';
+import { LoginUseCase } from '../../use-cases/login.use-case';
 import { LoginCommand } from '../../commands/login.command';
-import { SaveTokenUseCase } from '../../user-cases/save-token.use-case';
+import { SaveTokenUseCase } from '../../use-cases/save-token.use-case';
 import { IJwtService } from '../jwt/jwt.service.interface';
 
 const UserRepositoryMock: IUserRepository = {

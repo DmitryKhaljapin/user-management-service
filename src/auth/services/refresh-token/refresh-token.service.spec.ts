@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { TYPES } from '../../../types';
 import { ITokenRepository } from '../../repository/token.repository.interface';
-import { RefreshTokenUseCase } from '../../user-cases/refresh-token.use-case';
+import { RefreshTokenUseCase } from '../../use-cases/refresh-token.use-case';
 import { IJwtService } from '../jwt/jwt.service.interface';
 import { RefreshTokenService } from './refresh-token.service';
 import { RefreshTokenCommand } from '../../commands/refresh-token.command';

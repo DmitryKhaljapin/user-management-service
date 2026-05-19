@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '../../../types';
 import { LogoutCommand } from '../../commands/logout.command';
 import { ITokenRepository } from '../../repository/token.repository.interface';
-import { LogoutUseCase } from '../../user-cases/logout.use-case';
+import { LogoutUseCase } from '../../use-cases/logout.use-case';
 
 @injectable()
 export class LogoutService implements LogoutUseCase {
