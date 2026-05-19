@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
-import { IJwtService } from '../auth/services/jwt/jwt.service.interface';
-import { TYPES } from '../types';
+import { IJwtService } from '../../auth/services/jwt/jwt.service.interface';
+import { TYPES } from '../../types';
 import { IMiddleware } from './middleware.interface';
 
 @injectable()

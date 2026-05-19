@@ -31,8 +31,8 @@ import { GetUserByIdService } from './user/services/get-user-by-id/get-user-by-i
 import { GetUsersService } from './user/services/get-users/get-users.service';
 import { RegisterUserService } from './auth/services/register-user/register-user.service';
 import { UserController } from './user/controllers/user.controller';
-import { IMiddleware } from './common/middleware.interface';
-import { AuthMiddleware } from './common/auth.middleware';
+import { IMiddleware } from './common/middlewares/middleware.interface';
+import { AuthMiddleware } from './common/middlewares/auth.middleware';
 
 export const appBindings = new ContainerModule(
   (options: ContainerModuleLoadOptions) => {

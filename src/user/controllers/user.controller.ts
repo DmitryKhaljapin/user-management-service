@@ -13,7 +13,7 @@ import { GetUserByIdUseCase } from '../use-cases/get-user-by-id.use-case';
 
 import { UserMapper } from '../mappers/user.mapper';
 import { IUserController } from './user.controller.interfase';
-import { AuthMiddleware } from '../../common/auth.middleware';
+import { AuthMiddleware } from '../../common/middlewares/auth.middleware';
 import { IConfigService } from '../../config/config.service.interface';
 
 @injectable()

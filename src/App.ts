@@ -1,6 +1,6 @@
 import { json } from 'body-parser';
 import cookieParser from 'cookie-parser';
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import { Server } from 'http';
 import { inject, injectable } from 'inversify';
 import cors from 'cors';
@@ -11,6 +11,7 @@ import { IDatabaseService } from './database/database.service.interface';
 import { ILogger } from './logger/logger.service.interface';
 import { IAuthController } from './auth/controller/auth.controller.interface';
 import { IUserController } from './user/controllers/user.controller.interfase';
+import { createGlobalErrorHandler } from './common/global-error-handler.factory';
 
 @injectable()
 export class App {
@@ -48,6 +49,12 @@ export class App {
     this.app.use('/api/users', this.userController.router);
   }
 
+  private useErrorHandler() {
+    const handler = createGlobalErrorHandler(this.logger);
+
+    this.app.use(handler);
+  }
+
   public async useDatabaseService() {
     await this.databaseService.connect();
   }
@@ -55,6 +62,8 @@ export class App {
   public async init() {
     this.useMiddleware();
     this.useRoutes();
+
+    this.useErrorHandler();
 
     await this.useDatabaseService();
 
