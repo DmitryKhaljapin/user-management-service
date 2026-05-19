@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 
 import { UserRole } from './user-role.enum';
 import { UserStatus } from './user-status.enum';
-import { ValidationException } from '../../common/exceptions/validation.exception';
+import { UnprocessableEntity } from '../../common/exceptions/unprocessable-entity.exception';
 
 export class NewUser {
   private _firstName: string;
@@ -78,15 +78,15 @@ export class NewUser {
 
   private validateBirthDate(date: Date): void {
     if (!(date instanceof Date)) {
-      throw new ValidationException('Invalid birth date');
+      throw new UnprocessableEntity('Invalid birth date');
     }
 
     if (isNaN(date.getTime())) {
-      throw new ValidationException('Invalid birth date');
+      throw new UnprocessableEntity('Invalid birth date');
     }
 
     if (date > new Date()) {
-      throw new ValidationException('Birth date cannot be in the future');
+      throw new UnprocessableEntity('Birth date cannot be in the future');
     }
   }
 

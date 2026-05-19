@@ -6,6 +6,7 @@ import { ForbiddenException } from './exceptions/forbidden.exception';
 import { NotFoundException } from './exceptions/not-found.exception';
 import { UnauthorizedException } from './exceptions/unauthorized.exception';
 import { ValidationException } from './exceptions/validation.exception';
+import { UnprocessableEntity } from './exceptions/unprocessable-entity.exception';
 
 export const createGlobalErrorHandler = (logger: ILogger) => {
   return (err: Error, _: Request, res: Response, __: NextFunction) => {
@@ -43,6 +44,12 @@ export const createGlobalErrorHandler = (logger: ILogger) => {
 
     if (err instanceof ValidationException) {
       return res.status(400).json({
+        message: err.message,
+      });
+    }
+
+    if (err instanceof UnprocessableEntity) {
+      return res.status(422).json({
         message: err.message,
       });
     }

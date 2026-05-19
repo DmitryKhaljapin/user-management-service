@@ -11,6 +11,10 @@ import { LogoutUseCase } from '../use-cases/logout.use-case';
 import { RefreshTokenUseCase } from '../use-cases/refresh-token.use-case';
 import { RegisterUserUseCase } from '../use-cases/register-user.use-case';
 import { IAuthController } from './auth.controller.interface';
+import { ValidateMiddleware } from '../../common/middlewares/validation.middleware';
+import { RegisterUserDto } from '../dto/register-user.dto';
+import { LoginrUserDto } from '../dto/login-user.dto';
+import { RefreshTokenDto } from '../dto/refresh-token.dto';
 
 @injectable()
 export class AuthController extends BaseController implements IAuthController {
@@ -40,16 +44,19 @@ export class AuthController extends BaseController implements IAuthController {
         path: '/register',
         method: 'post',
         func: this.registerUser,
+        middlewares: [new ValidateMiddleware(RegisterUserDto)],
       },
       {
         path: '/login',
         method: 'post',
         func: this.loginUser,
+        middlewares: [new ValidateMiddleware(LoginrUserDto)],
       },
       {
         path: '/refresh',
         method: 'post',
         func: this.refreshToken,
+        middlewares: [new ValidateMiddleware(RefreshTokenDto)],
       },
       {
         path: '/logout',
